@@ -22,10 +22,10 @@ conn = pyodbc.connect(f'DRIVER={driver};SERVER={server};DATABASE={database};UID=
 # Create a cursor object
 cursor = conn.cursor()
 
-# Redis connection details
-redis_host = 'Redis-1002119262-SaarthakMudigereGirish.redis.cache.windows.net'
+#Redis connection details
+redis_host = 'Quiz3-Redis-1002119262-SaarthakMudigereGirish.redis.cache.windows.net'
 redis_port = 6379
-redis_password = 'My2SymFLIM78MdHnE61sCcWkM6G0HGWd6AzCaKwIZUU='
+redis_password = 'zQduqGPeUqTqvUqGO2GJQs0uVD70JQGc4AzCaNWPPTM='
 
 # Redis client
 redis_client = redis.Redis(host=redis_host, port=redis_port, password=redis_password)
@@ -35,7 +35,7 @@ redis_client = redis.Redis(host=redis_host, port=redis_port, password=redis_pass
 def index():
     return render_template("index.html")
 
-
+'''
 @app.route("/page1/", methods=['GET', 'POST'])
 def page1():
     total_time = []
@@ -134,7 +134,7 @@ def page3():
 
     return render_template("3)Page.html", total_time=total_time, instance_time=instance_time, count=count, salpics=salpics)
 
-
+'''
 @app.route("/page4a/", methods=['GET', 'POST'])
 def page4a():
     instance_time = []
@@ -143,16 +143,19 @@ def page4a():
     redis_time = []
 
     if request.method == "POST":
-        min = request.form['min']
-        max = request.form['max']
+        minlat = request.form['minlat']
+        maxlat = request.form['maxlat']
+        minlong = request.form['minlong']
+        maxlong = request.form['maxlong']
 
         for i in range(30):
             instance.append(i + 1)
 
-        query = "SELECT City, State, Population, lat, lon FROM dbo.city1 WHERE Population BETWEEN ? AND ?"
+        query = "SELECT City, State, Population, lat, lon FROM dbo.city1 WHERE lat BETWEEN ? AND ? AND lon BETWEEN ? AND ?"
+
         for i in instance:
             start = time.time()
-            cursor.execute(query, min, max)
+            cursor.execute(query, minlat, maxlat, minlong, maxlong)
             end = time.time()
             instance_time.append(end-start)
 
@@ -170,7 +173,7 @@ def page4a():
 
     return render_template("4a)Page.html", redis_time=redis_time, instance_time=instance_time, instance=instance)
 
-
+'''
 @app.route("/page4b/", methods=['GET', 'POST'])
 def page4b():
     instance_time = []
@@ -207,6 +210,6 @@ def page4b():
 
     return render_template("4b)Page.html", redis_time=redis_time, instance_time=instance_time, instance=instance)
 
-
+'''
 if __name__ == "__main__":
     app.run(debug=True)
