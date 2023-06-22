@@ -60,6 +60,20 @@
 		);
 
 	</script>
+<h2> Total time: {{total_time}}</h2>
+            <ul style="list-style-type:none">
+                {% for salpic in salpics %}
+                    <table>
+                        <tr>
+                            <td>{{salpic[0]}}</td>
+                            <td>{{salpic[1]}}</td>
+                            <td>{{salpic[2]}}</td>
+                            <td>{{salpic[3]}}</td>
+                            <td>{{salpic[4]}}</td>
+                        </tr>
+                    </table>
+                {% endfor %}
+            </ul>
 
 <!--            <ul style="list-style-type:none">-->
 <!--                {% for salpic in salpics %}-->
